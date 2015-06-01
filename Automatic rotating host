@@ -1,0 +1,258 @@
+;; ***Commands***
+;; !rotate on - turns on auto hosting
+;; !rotate off - turns off auto hosting & unhosts
+;; !rotate skip - skipsa channel being hosted and moves to the next
+
+
+on *:TEXT:!rotate*:#: {
+  if ($nick isop #) {
+    if ($2 == on) {
+      Hosting
+      .timerRotatingHost 0 5400 Hosting
+      .msg $chan Host mode has been resumed.
+    }
+    elseif ($2 == off) {
+      .timerRotatingHost off
+      .msg $chan /unhost
+      .msg $chan Host mode has been suspended.
+    }
+    elseif ($2 == skip) {
+      Hosting
+      .msg $chan Current host has been skipped
+    }
+  }
+}
+
+alias Hosting {
+  if (%hosting.number == 1 ) {
+    var -g %channelname = "channel name"
+    twitch.data
+  }
+  elseif (%hosting.number == 2 ) {
+    var -g %channelname = "channel name"
+    Twitch.data
+  }
+  elseif (%hosting.number == 3 ) {
+    var -g %channelname = "channel name"
+    twitch.data
+  }
+  elseif (%hosting.number == 4 ) {
+    var -g %channelname = "channel name"
+    twitch.data
+  }
+  elseif (%hosting.number == 5 ) {
+    var -g %channelname = "channel name"
+    twitch.data
+  }
+  elseif (%hosting.number == 6 ) {
+    var -g %channelname = "channel name"
+    twitch.data
+  }
+  elseif (%hosting.number == 7 ) {
+    var -g %channelname = "channel name"
+    twitch.data
+  }
+  elseif (%hosting.number == 8 ) {
+    var -g %channelname = "channel name"
+    twitch.data
+  }
+  elseif (%hosting.number == 9 ) {
+    var -g %channelname = "channel name"
+    twitch.data
+  }
+  elseif (%hosting.number == 10 ) {
+    var -g %channelname = "channel name"
+    twitch.data
+  }
+  elseif (%hosting.number == 11) {
+    var -g %channelname = "channel name"
+    twitch.data
+  }
+  elseif (%hosting.number == 12) {
+    var -g %channelname = "channel name"
+    twitch.data
+  }
+  elseif (%hosting.number == 13) {
+    var -g %channelname = "channel name"
+    twitch.data
+  }
+  elseif (%hosting.number == 14) {
+    var -g %channelname = "channel name"
+    twitch.data
+  }
+  elseif (%hosting.number == 15) {
+    var -g %channelname = "channel name"
+    twitch.data
+  }
+  elseif (%hosting.number == 16) {
+    var -g %channelname = "channel name"
+    twitch.data
+  }
+  elseif (%hosting.number == 17) {
+    var -g %channelname = "channel name"
+    twitch.data
+  }
+  elseif (%hosting.number == 18) {
+    var -g %channelname = "channel name"
+    twitch.data
+  }
+  elseif (%hosting.number == 19) {
+    var -g %channelname = "channel name"
+    twitch.data
+  }
+  elseif (%hosting.number == 20) {
+    var -g %channelname = "channel name"
+    twitch.data
+  }
+  elseif (%hosting.number == 21) {
+    var -g %channelname = "channel name"
+    twitch.data
+  }
+  elseif (%hosting.number == 22) {
+    var -g %channelname = "channel name"
+    twitch.data
+  }
+  elseif (%hosting.number == 23) {
+    var -g %channelname = "channel name"
+    twitch.data
+  }
+  elseif (%hosting.number == 24) {
+    var -g %channelname = "channel name"
+    twitch.data
+  }
+  elseif (%hosting.number == 25) {
+    var -g %channelname = "channel name"
+    twitch.data
+  }
+  elseif (%hosting.number == 26) {
+    var -g %channelname = "channel name"
+    twitch.data
+  }
+  elseif (%hosting.number == 27) {
+    var -g %channelname = "channel name"
+    twitch.data
+  }
+  elseif (%hosting.number == 28) {
+    var -g %channelname = "channel name"
+    twitch.data
+  }
+  elseif (%hosting.number == 29) {
+    var -g %channelname = "channel name"
+    twitch.data
+  }
+  elseif (%hosting.number == 30) {
+    var -g %channelname = "channel name"
+    twitch.data
+  }
+  elseif (%hosting.number == 31) {
+    var -g %channelname = "channel name"
+    twitch.data
+  }
+  elseif (%hosting.number == 32) {
+    var -g %channelname = "channel name"
+    twitch.data
+  }
+  elseif (%hosting.number == 33) {
+    var -g %channelname = "channel name"
+    twitch.data
+  }
+  elseif (%hosting.number == 34) {
+    var -g %channelname = "channel name"
+    twitch.data
+  }
+  elseif (%hosting.number == 35) {
+    var -g %channelname = "channel name"
+    twitch.data   
+  }
+  elseif (%hosting.number == 36) {
+    var -g %hosting.number = 1
+    Loop
+  }
+}
+
+alias Loop {
+  Hosting
+}
+
+alias -l twitch.token {
+  if ($1 == bot name) return Oauth
+}
+
+alias twitch.data {
+  var %sockname = twitch.info. $+ $ticks
+  hfree -w %sockname | hmake %sockname
+  hadd %sockname headerfile %sockname $+ .header.txt
+  hadd %sockname datafile %sockname $+ .data.txt
+  hadd %sockname params %channelname
+  ;$twitch.token($mid(%chan,2-))
+  hadd %sockname oath.token 
+  hadd %sockname request /kraken/streams/ $+ %channelname
+  hadd %sockname method GET
+  hadd %sockname signal viewers.get
+  sockopen -e %sockname api.twitch.tv 443
+}
+
+on *:signal:viewers.get:{
+  var %err = $1, %sockname = $2, %header = $3, %data = $4, %chan = $5
+  if (* 200 OK iswm $read(%header,1))
+    if ($json_utf8(%data,stream) = $null) { unset %channelname | inc %hosting.number | Hosting }
+    else { msg $chan /host %channelname | inc %hosting.number }
+  }
+
+  elseif (* 404 Not Found iswm $read(%header,1)) { msg #spectrumdominus Could not get viewer count at this time. }
+
+  hfree -w %sockname
+  .remove %header | .remove %data
+}
+
+
+on *:sockopen:twitch.*:{
+  var %a = sockwrite -n $sockname
+  %a $hget($sockname,method) $hget($sockname,request) HTTP/1.0
+  %a Host: api.twitch.tv
+  %a Connection: close
+  %a Accept: application/vnd.twitchtv.v2+json
+  if ($hget($sockname,oath.token) != $null) %a Authorization: OAuth $v1
+  if ($hget($sockname,data) != $null) {
+    %a Content-Type: application/x-www-form-urlencoded
+    %a Content-Length: $len($v1)
+  }
+  %a $+($crlf,$hget($sockname,data))
+}
+
+on *:sockread:twitch.*:{
+  var %header
+  var %headerfile = $hget($sockname,headerfile)
+  var %datafile = $hget($sockname,datafile)
+
+  if (!$hget($sockname,header.complete)) {
+    sockread %header
+    while (%header != $null) {
+      write %headerfile %header
+      sockread %header
+    }
+    if ($sockbr) hadd $sockname header.complete $true
+  }
+  if ($hget($sockname,header.complete)) {
+    sockread &read
+    while ($sockbr) {
+      bwrite %datafile -1 -1 &read
+      sockread &read
+    }
+  }
+}
+
+on *:sockclose:twitch.*:{
+  var %header = $hget($sockname,headerfile)
+  var %data = $hget($sockname,datafile)
+  var %signal = $hget($sockname,signal)
+  var %params = $hget($sockname,params)
+
+  if (%signal) .signal %signal 0 $sockname %header %data %params
+  else {
+    hfree -w $sockname
+    .remove %header | .remove %data
+  }
+}
+
+alias urlencode return $regsubex($1-,/([^A-Z0-9])/gi,$+(%,$base($asc(\1),10,16)))
