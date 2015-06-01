@@ -1,0 +1,11 @@
+;; ***Commands***
+;; !todo "stuff" - adds "stuff" to text file for later review
+
+on *:text:*:#murdaduece87: {
+  if ( $1 == !todo ) {
+    var %channame = $right($chan, -1)
+    var %todo = %channame $+ _todo.ini
+    write %todo $2- $+
+    .msg $chan /me Item added to Todo list!
+  }
+}
