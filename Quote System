@@ -1,0 +1,25 @@
+;; ***Commands***
+;; !aq "quote here" - date
+;; !sq outputs a random quote in the list
+;; !sq# will output quote of the # provided
+
+on *:text:*:#: { 
+  var %channame = $right($chan, -1)
+  var %quotename = %channame $+ _quotes.ini
+  if ($1 == !aq) {
+    if ($nick isop #) {
+      write %quotename $2- $+
+      msg $chan Quote Added
+    }
+  }
+  if ($1 == !sq) {
+    if ($2 == $null) {
+      .msg $chan '[??/ $+ $lines(%quotename) $+ ]' $read(%quotename, n)
+    }
+  }
+  if ($1 == !sq) {
+    if ($2 isnum) {
+      .msg $chan '[ $+ $2 $+ / $+ $lines(%quotename) $+ ]' $read(%quotename, n, $2)
+    } 
+  }
+}
