@@ -1,0 +1,82 @@
+on *:TEXT:!keydrop *:#: {
+  if ($nick isop #) {
+    if ($2 == start) {
+      ;do stuff here
+      phaseone
+      .msg $chan /me pay attention to chat, the key drops start NOW!
+    }
+    if ($2 == stop) {
+      ;stop doing stuff
+      .timer9minute off
+      .timer1minute off
+      .timer9minute2 off
+      .timer1minute2 off
+    }
+  }
+}
+ 
+alias phaseone {
+  .timer9minute2 1 540 .msg $chan /me Dropping a key in ONE MINUTE!!!
+  .timer9minute 1 540 phasetwo
+}
+ 
+alias phasetwo {
+  .timer1minute 1 60 phaseone
+  .timer1minute2 1 60 Keys
+}
+ 
+alias Keys {
+  if (%keys.number == 1 ) {
+    .msg $chan /me THIS-IS-JUST-A-TEST
+    inc %keys.number
+    phaseone
+  }
+  elseif (%keys.number == 2 ) {
+    .msg $chan /me STILL-JUST-A-TEST
+    inc %keys.number
+    phaseone
+  }
+  elseif (%keys.number == 3 ) {
+    .msg $chan /me BLAH-BLAH-BLAH-BLAH
+    inc %keys.number
+    phaseone
+  }
+  elseif (%keys.number == 4 ) {
+    .msg $chan /me THIS-CAN-BE-FUN
+    inc %keys.number
+    phaseone
+  }
+  elseif (%keys.number == 5 ) {
+    .msg $chan /me THESE-WILL-BE-REAL-KEYS
+    inc %keys.number
+    phaseone
+  }
+  elseif (%keys.number == 6 ) {
+    .msg $chan /me ITS-A-RACE-TO-THE-GAMES
+    inc %keys.number
+    phaseone
+  }
+  elseif (%keys.number == 7 ) {
+    .msg $chan /me FIRST-TO-CLAIM-GETS-THE-GAME
+    inc %keys.number
+    phaseone
+  }
+  elseif (%keys.number == 8 ) {
+    .msg $chan /me PAY-CLOSE-ATTENTION
+    inc %keys.number
+    phaseone
+  }
+  elseif (%keys.number == 9 ) {
+    .msg $chan /me THE-GAME-IS-A-MYSTERY
+    inc %keys.number
+    phaseone
+  }
+  elseif (%keys.number == 10 ) {
+    .msg $chan /me 12-HOURS-OF-KEY-DROPS
+    var -g %keys.number = 1
+    .timer9minute off
+    .timer1minute off
+    .timer9minute2 off
+    .timer1minute2 off
+  }
+}
